@@ -1,7 +1,6 @@
-from People import Person   #подключение модулей
-from db import Create_database, Join, Change, Ban
+from db import Create_database, Verification, Join, Change, Ban #подключение модулей
 from config import BOT_TOKEN
-import telegramcalendar
+#import telegramcalendar
 
 from aiogram import Bot, types  #подключение библиотеки для работы с telegram
 from aiogram.bot import api
@@ -15,18 +14,25 @@ Create_database()
 
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
-    user_id = message.from_user.id  #считывание id и имени
-    if message.from_user.first_name != 'None':
-        name = message.from_user.first_name
-    elif message.from_user.username != 'None':
-        name = message.from_user.username
-    elif message.from_user.last_name != 'None':
-        name = message.from_user.last_name
+    user_id = message.from_user.id  #считывание id
+    if Verification(user_id) == True:
+        await bot.send_message(message.chat.id, 'Привет, мы с тобой уже работали раньше.\nВаши записи сохранины.')
     else:
-        name = ''
-    Join(user_id, name)
-    await bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIEqF5VL5ozeLnmwSaOJAbKQDQAAfidjQACYwkAAgk7OxMAAVFVxKRh8u0YBA')
-    await bot.send_message(message.chat.id, 'Этот бот нужен для создания заметок.\nОн может хранить ваши заметки и отправлять вам напоминания.\nДля работы с ним не нужна дополнительная авторизация(только аккуаунт в telegram), вы можете проверять записи и получать уведомления на другое устройство.\nЧтобы ознакомиться с функционалом нажмите на /commands')
+        if message.from_user.first_name != 'None': #проверка наличия имеи, фамилии и юзернейма
+            name = message.from_user.first_name
+        elif message.from_user.username != 'None':
+            name = message.from_user.username
+        elif message.from_user.last_name != 'None':
+            name = message.from_user.last_name
+        else:
+            name = ''
+        Join(user_id, name)
+        await bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIEqF5VL5ozeLnmwSaOJAbKQDQAAfidjQACYwkAAgk7OxMAAVFVxKRh8u0YBA')
+        await bot.send_message(message.chat.id, 'Этот бот нужен для создания заметок.\nОн может хранить ваши заметки и отправлять вам напоминания.\nДля работы с ним не нужна дополнительная авторизация(только аккуаунт в telegram), вы можете проверять записи и получать уведомления.\nЧтобы глубже ознакомиться с функционалом нажмите на /commands')
+
+@dp.message_handler(commands=['creat'])
+choose()
+
 
 @dp.message_handler(commands=['choose'])
 async def choose(message: types.Message): 
@@ -60,7 +66,7 @@ async def list_commands(message: types.Message):
 
 @dp.message_handler(commands=['info'])
 async def info(message: types.Message):
-    await bot.send_message(message.chat.id, '[О боте]\n Это приложение создано для планирования дел. Здесь вы можете создать своё расписание и ежедневно добавлять новые планы на день. В установленное время вам будет приходить уведомление.\nТакже бот залит на Github')
+    await bot.send_message(message.chat.id, '[О боте]\n Это приложение создано для планирования дел. Здесь вы можете создать своё расписание и добавлять новые заметки. В установленное время вам будет приходить уведомление.\nТакже код проекта доступен на Github')
 
 @dp.message_handler(commands=['contacts'])
 async def contacts(message: types.Message):
