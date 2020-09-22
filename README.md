@@ -1,4 +1,6 @@
-# Telegram-bot for reminders
+# [Telegram-bot](https://t.me/Multitask_4Bot "https://t.me/Multitask_4Bot") for reminders
+
+> *you must provide yourself with a bot id in advance. you can register your bot with [BotFather](https://t.me/BotFather "https://t.me/BotFather")*
 
 ## How to run a bot on a server
 - download code from github

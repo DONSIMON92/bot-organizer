@@ -30,9 +30,7 @@ async def start_message(message: types.Message):
         await bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIEqF5VL5ozeLnmwSaOJAbKQDQAAfidjQACYwkAAgk7OxMAAVFVxKRh8u0YBA')
         await bot.send_message(message.chat.id, 'Этот бот нужен для создания заметок.\nОн может хранить ваши заметки и отправлять вам напоминания.\nДля работы с ним не нужна дополнительная авторизация(только аккуаунт в telegram), вы можете проверять записи и получать уведомления.\nЧтобы глубже ознакомиться с функционалом нажмите на /commands')
 
-@dp.message_handler(commands=['creat'])
-choose()
-
+#@dp.message_handler(commands=['creat'])
 
 @dp.message_handler(commands=['choose'])
 async def choose(message: types.Message): 
