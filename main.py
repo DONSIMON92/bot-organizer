@@ -1,6 +1,10 @@
-from db import Create_database, Verification, Join, Change, Ban #подключение модулей
+from db import Create_database, Verification, Join,  #подключение модулей
 from config import BOT_TOKEN
-#import telegramcalendar
+import telegramcalendar
+from telegramcalendar import create_calendar
+
+import datetime
+import logging
 
 from aiogram import Bot, types  #подключение библиотеки для работы с telegram
 from aiogram.bot import api
@@ -29,6 +33,19 @@ async def start_message(message: types.Message):
         Join(user_id, name)
         await bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIEqF5VL5ozeLnmwSaOJAbKQDQAAfidjQACYwkAAgk7OxMAAVFVxKRh8u0YBA')
         await bot.send_message(message.chat.id, 'Этот бот нужен для создания заметок.\nОн может хранить ваши заметки и отправлять вам напоминания.\nДля работы с ним не нужна дополнительная авторизация(только аккуаунт в telegram), вы можете проверять записи и получать уведомления.\nЧтобы глубже ознакомиться с функционалом нажмите на /commands')
+    #some_func_message_to_start_job
+
+@dp.message_handler(commands=['calendar'])
+async def get_calendar(message):
+    now = datetime.datetime.now() #Текущая дата
+    chat_id = message.chat.id
+    date = (now.year,now.month)
+    #current_shown_dates = {}
+    #current_shown_dates[chat_id] = date #Сохраним текущую дату в словарь
+    keyboard = create_calendar(now.year,now.month)
+    await bot.send_message(message.chat.id, "Пожалйста, выберите дату", reply_markup=keyboard)
+    print('5*****\n')
+    #bot.answer_callback_query(call.id, text="Дата выбрана")
 
 #@dp.message_handler(commands=['creat'])
 
@@ -64,12 +81,12 @@ async def list_commands(message: types.Message):
 
 @dp.message_handler(commands=['info'])
 async def info(message: types.Message):
-    await bot.send_message(message.chat.id, '[О боте]\n Это приложение создано для планирования дел. Здесь вы можете создать своё расписание и добавлять новые заметки. В установленное время вам будет приходить уведомление.\nТакже код проекта доступен на Github')
+    await bot.send_message(message.chat.id, '[О боте]\nЭто приложение создано для планирования дел. Здесь вы можете создать своё расписание и добавлять новые заметки. В установленное время вам будет приходить уведомление.\nТакже код проекта доступен на Github')
 
 @dp.message_handler(commands=['contacts'])
 async def contacts(message: types.Message):
     keyboard = types.InlineKeyboardMarkup()
-    url_button = types.InlineKeyboardButton(text="Перейти на GitHub", url="https://github.com/DONSIMON92")
+    url_button = types.InlineKeyboardButton(text="Перейти на GitHub", url="https://github.com/DONSIMON92/bot-organizer")
     keyboard.add(url_button)
     await bot.send_message(message.chat.id, 'Проект доступен на GitHub', reply_markup=keyboard)
 
