@@ -1,18 +1,18 @@
-CREATE TABLE Users(
+CREATE TABLE IF NOT EXISTS Users(
     user_id INTEGER PRIMARY KEY,
     name VARCHAR(40)
 );
 
-CREATE TABLE WeeklyAffairs(
-    user_id INTEGER REFERENCE Users(user_id),
-    day INT,
-    time INT,
-    data TEXT
+CREATE TABLE IF NOT EXISTS WeeklyAffairs(
+    user_id INTEGER REFERENCES Users(user_id),
+    day INTEGER,
+    time INTEGER,
+    data TEXT NOT NULL
 );
 
-CREATE TABLE Affairs(
-    user_id INTEGER REFERENCE Users(user_id),
-    date INT,
-    time INT,
-    data TEXT
+CREATE TABLE IF NOT EXISTS Affairs(
+    user_id INTEGER REFERENCES Users(user_id),
+    date INTEGER,
+    time INTEGER,
+    data TEXT NOT NULL
 );

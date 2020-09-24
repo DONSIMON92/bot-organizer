@@ -1,15 +1,13 @@
-from db import Create_database, Verification, Join,  #подключение модулей
-from config import BOT_TOKEN
-import telegramcalendar
-from telegramcalendar import create_calendar
-
 import datetime
-import logging
 
 from aiogram import Bot, types  #подключение библиотеки для работы с telegram
 from aiogram.bot import api
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
+
+from db import Create_database, Verification, Join #подключение модулей
+from telegramcalendar import create_calendar
+from config import BOT_TOKEN
 
 bot = Bot(token = BOT_TOKEN)
 dp = Dispatcher(bot)
