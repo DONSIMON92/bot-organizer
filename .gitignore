@@ -2,3 +2,6 @@ __pycache__/
 multitask.db
 config.py
 .venv
+
+# if I use IDE
+.idea/

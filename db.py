@@ -4,9 +4,6 @@ import sqlite3
 conn = sqlite3.connect('multitask.db')
 cursor = conn.cursor()
 
-#def create_database():
-#    cursor.execute('CREATE TABLE IF NOT EXISTS Persons(user_id INTEGER PRIMARY KEY, name VARCHAR(35))')
-#    conn.commit()
 def Create_database():                                                                            
     with open("createdb.sql", "r") as f:
         sql = f.read()
@@ -26,9 +23,3 @@ def Verification(user_id):
         return False
     else:
         return True
-
-#def Change(user_id):
-#    print('change info about user')
-
-#def Ban(user_id):
-#    print('banbanbanban')
