@@ -1,4 +1,5 @@
 import datetime
+import re
 
 from aiogram import Bot, types  # подключение библиотеки для работы с telegram
 # from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -7,7 +8,7 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 
 from db import Create_database, Verification, Join  # подключение модулей
-from telegramcalendar import create_calendar
+#from telegramcalendar import create_calendar
 from config import BOT_TOKEN
 
 bot = Bot(token=BOT_TOKEN)
@@ -37,11 +38,32 @@ async def start_message(message: types.Message):
                                                 'Для работы с ним не нужна дополнительная авторизация,\n'
                                                 'Вы можете проверять записи и получать уведомления.\n'
                                                 'Чтобы глубже ознакомиться с функционалом нажмите на /commands')
-    keyboard = types.InlineKeyboardMarkup()
-    button1 = types.InlineKeyboardButton(text='Да', callback_data='да')
-    button2 = types.InlineKeyboardButton(text='Нет', callback_data='нет')
-    keyboard.add(button1, button2)
-    await bot.send_message(message.chat.id, 'Хотите добавить заметку?', reply_markup=keyboard)
+
+    await bot.send_message(message.chat.id, 'жду твоего сообщения 🕐')
+    #first = datetime.datetime.now().time()
+    #await bot.edit_message_text(chat_id=message.chat.id, message_id=message.message_id, text='жду твоего сообщения 🕑')
+
+    #keyboard = types.InlineKeyboardMarkup()
+    #button1 = types.InlineKeyboardButton(text='Да', callback_data='да')
+    #button2 = types.InlineKeyboardButton(text='Нет', callback_data='нет')
+    #keyboard.add(button1, button2)
+    #await bot.send_message(message.chat.id, 'Хотите добавить заметку?', reply_markup=keyboard)
+
+
+@dp.message_handler(content_types=['text'])
+async def get_info(message: types.Message):
+    pattern_date = r'\d{2}-\d{2}-\d{4}'
+    pattern_today = r'сегодня'                      # date
+    pattern_tomorrow = r'завтра'
+    pattern_day_after_tomorrow = r'послезавтра'
+    pattern_time = r' час'                          # hour
+    when = re.findall(pattern, string)
+    await bot.send_message(message.chat.id, 'Ё')
+    
+
+@dp.message_handler(content_types=['photo'])
+async def get_photo(message: types.Message):
+    await bot.send_message(message.chat.id, 'КРАСОТА 😍😍😍')
 
 
 @dp.callback_query_handler(lambda call: True)
@@ -68,11 +90,6 @@ async def get_calendar(message):
     # bot.answer_callback_query(call.id, text='Дата выбрана')
 
 
-@dp.message_handler(commands=['add'])
-async def add(message: types.Message):
-    await bot.send_message(message.chat.id, '')
-
-
 @dp.message_handler(commands=['today'])
 async def today(message: types.Message):
     await bot.send_message(message.chat.id, 'список день на сегодня\n\n')
@@ -88,7 +105,7 @@ async def list_commands(message: types.Message):
 
 
 @dp.message_handler(commands=['info'])
-async def info(message: types.Message):
+async def give_info(message: types.Message):
     await bot.send_message(message.chat.id, '[О боте]\nЭто приложение создано для планирования дел.'
                                             'Здесь вы можете создать своё расписание и добавлять новые заметки.'
                                             'В установленное время вам будет приходить уведомление.\n'
