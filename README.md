@@ -15,6 +15,10 @@
     ```
     pip3 install -r requirements.txt
     ```
+- to connect your bot's token (put your token that [BotFather](https://t.me/BotFather "https://t.me/BotFather") issued instead of ellipsis)
+    ```
+    echo "BOT_TOKEN = '...'" >> config.py
+    ```
 - start bot
     ```
     python main.py
